@@ -1,11 +1,9 @@
 <?php
 // Gunakan environment variables dari Vercel Dashboard
-$host = getenv('DB_HOST') ?: "gateway01.ap-southeast-1.prod.aws.tidbcloud.com
-";
-$user = getenv('DB_USER') ?: "3R2XTKo8EgjMuvP.root
-";
-$pass = getenv('DB_PASS') ?: "g8Qy6ZoVrtbE72bI
-";
+// JANGAN hardcode credentials di sini!
+$host = getenv('DB_HOST') ?: "localhost";
+$user = getenv('DB_USER') ?: "root";
+$pass = getenv('DB_PASS') ?: "";
 $db   = getenv('DB_NAME') ?: "test";
 $port = getenv('DB_PORT') ?: 4000;
 
