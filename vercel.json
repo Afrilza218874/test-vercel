@@ -6,7 +6,8 @@
   },
   "routes": [
     { "src": "/", "dest": "/api/index.php" },
-    { "src": "/koneksi.php", "dest": "/api/koneksi.php" },
+    { "src": "/tampil.php", "dest": "/api/tampil.php" },
+    { "src": "/api_mahasiswa.php", "dest": "/api/api_mahasiswa.php" },
     { "src": "/(.*\\.php)", "dest": "/api/$1" }
   ]
 }
