@@ -48,7 +48,7 @@
 </table>
 
 <script>
-fetch('https://tugasdatabase.vercel.app/api_mahasiswa.php')
+fetch('api_mahasiswa.php')
 .then(response => response.json())
 .then(data => {
     let output = "";
