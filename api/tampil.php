@@ -48,7 +48,7 @@
 </table>
 
 <script>
-fetch('api_mahasiswa.php')
+fetch('https://smart-umkm.com/contoh/api_mahasiswa.php')
 .then(response => response.json())
 .then(data => {
     let output = "";
