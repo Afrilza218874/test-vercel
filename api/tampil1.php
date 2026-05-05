@@ -1,5 +1,5 @@
 <?php
-$url = "https://project-hpvuo.vercel.app/api_mahasiswa.php";
+$url = "https://test-vercel-six-tau.vercel.app/api_mahasiswa.php";
 $response = file_get_contents($url);
 $mahasiswa = json_decode($response, true);
 ?>
