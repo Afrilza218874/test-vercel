@@ -15,6 +15,7 @@
     { "src": "/wisuda/api_periode.php", "dest": "/api/wisuda/api_periode.php" },
     { "src": "/wisuda/api_staf.php", "dest": "/api/wisuda/api_staf.php" },
     { "src": "/wisuda/api_pendaftaran.php", "dest": "/api/wisuda/api_pendaftaran.php" },
+    { "src": "/wisuda/tampil_mahasiswa.php", "dest": "/api/wisuda/tampil_mahasiswa.php" },
     { "src": "/wisuda/(.*\\.php)", "dest": "/api/wisuda/$1" },
     { "src": "/(.*\\.php)", "dest": "/api/$1" }
   ]
