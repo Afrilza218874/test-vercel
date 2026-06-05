@@ -1,9 +1,3 @@
-<?php
-require_once __DIR__ . '/koneksi.php';
-
-$sql = "SELECT * FROM tabel_mahasiswa ORDER BY id_mahasiswa ASC";
-$result = mysqli_query($conn, $sql);
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -22,12 +16,6 @@ $result = mysqli_query($conn, $sql);
             padding: 30px;
             color: #333;
         }
-        h1 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #1a1a2e;
-            font-size: 24px;
-        }
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -42,10 +30,8 @@ $result = mysqli_query($conn, $sql);
             padding: 20px 25px;
         }
         .header h1 {
-            color: #fff;
             margin: 0;
             font-size: 22px;
-            text-align: left;
         }
         .header p {
             margin-top: 5px;
@@ -95,6 +81,18 @@ $result = mysqli_query($conn, $sql);
             color: #888;
             border-top: 1px solid #e9ecef;
         }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 15px;
+        }
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #dc3545;
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
@@ -113,30 +111,49 @@ $result = mysqli_query($conn, $sql);
                     <th>IPK</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php
-                if ($result && mysqli_num_rows($result) > 0) {
-                    $no = 1;
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>";
-                        echo "<td>{$no}</td>";
-                        echo "<td>{$row['nim']}</td>";
-                        echo "<td>{$row['nama_mahasiswa']}</td>";
-                        echo "<td>{$row['prodi']}</td>";
-                        echo "<td><span class='badge-ipk'>{$row['ipk']}</span></td>";
-                        echo "</tr>";
-                        $no++;
-                    }
-                } else {
-                    echo "<tr><td colspan='5' style='text-align:center; padding:30px; color:#888;'>Belum ada data mahasiswa</td></tr>";
-                }
-                ?>
+            <tbody id="tabel-body">
+                <tr>
+                    <td colspan="5" class="loading">⏳ Memuat data dari API...</td>
+                </tr>
             </tbody>
         </table>
-        <div class="footer">
-            Total: <?php echo $result ? mysqli_num_rows($result) : 0; ?> mahasiswa
+        <div class="footer" id="footer">
+            Memuat...
         </div>
     </div>
+
+    <script>
+        const API_URL = "https://test-vercel-six-tau.vercel.app/wisuda/api_mahasiswa.php";
+
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById("tabel-body");
+                const footer = document.getElementById("footer");
+
+                if (data.status === "success" && data.data.length > 0) {
+                    let html = "";
+                    data.data.forEach((mhs, index) => {
+                        html += `<tr>
+                            <td>${index + 1}</td>
+                            <td>${mhs.nim}</td>
+                            <td>${mhs.nama_mahasiswa}</td>
+                            <td>${mhs.prodi}</td>
+                            <td><span class="badge-ipk">${mhs.ipk}</span></td>
+                        </tr>`;
+                    });
+                    tbody.innerHTML = html;
+                    footer.textContent = `Total: ${data.jumlah} mahasiswa`;
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="5" class="loading">Belum ada data mahasiswa</td></tr>`;
+                    footer.textContent = "Total: 0 mahasiswa";
+                }
+            })
+            .catch(error => {
+                document.getElementById("tabel-body").innerHTML =
+                    `<tr><td colspan="5" class="error">❌ Gagal memuat data: ${error.message}</td></tr>`;
+                document.getElementById("footer").textContent = "Error";
+            });
+    </script>
 </body>
 </html>
-<?php mysqli_close($conn); ?>
